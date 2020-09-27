@@ -15,7 +15,7 @@ async function runAction(getInput, writeOutput) {
 }
 
 runAction(githubActionIO.getInput, githubActionIO.writeOutput)
-    .then(() => console.log("Uploading finished") )
+    .then(() => console.log("Download finished") )
     .catch((err) => githubActionIO.fail(err));
     
 

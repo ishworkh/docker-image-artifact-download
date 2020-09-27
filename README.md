@@ -20,7 +20,7 @@ Path in node where docker image archive is downloaded. Eg. `/tmp/foo_latest` for
 ```
 ...
 jobs:
-  build_and_upload:
+  download_image:
     - name: Checkout project
       uses: actions/checkout@v2
 
