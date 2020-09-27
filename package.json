@@ -1,13 +1,13 @@
 {
   "name": "docker-image-artifact-download",
   "version": "1.0.0",
-  "description": "Github action to download docker image from artifact that was upload from another job",
+  "description": "Github action to download docker image from artifact that was uploaded from another job",
   "scripts": {
     "build": "./node_modules/.bin/webpack --target node index.js -o dist/index.js"
   },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/ishworkh/docker-image-artifact-download"
   },
   "keywords": [
     "github",
@@ -20,9 +20,9 @@
   "author": "Ishwor Khadka",
   "license": "MIT",
   "bugs": {
-    "url": ""
+    "url": "https://github.com/ishworkh/docker-image-artifact-download/issues"
   },
-  "homepage": "",
+  "homepage": "https://github.com/ishworkh/docker-image-artifact-download",
   "dependencies": {
     "@actions/core": "^1.2",
     "docker-image-artifact": "git+ssh://git@github.com/ishworkh/docker-image-artifact.git#semver:^1.0"
