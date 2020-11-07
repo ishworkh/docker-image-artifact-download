@@ -16,7 +16,6 @@ Path in node where docker image archive is downloaded. Eg. `/tmp/foo_latest` for
 
 ## Example usage
 
-### With an extractor regex 
 ```
 ...
 jobs:
@@ -33,5 +32,3 @@ jobs:
 
 ## License
 This library is under the MIT license.
-
-
