@@ -23,7 +23,7 @@ jobs:
     - name: Checkout project
       uses: actions/checkout@v2
 
-    - name: Upload image
+    - name: Download image
       uses: ishworkh/docker-image-artifact-download@v1
       with:
         image: "test_image:latest"
