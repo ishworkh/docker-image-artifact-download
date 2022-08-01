@@ -1,12 +1,12 @@
-name: 'Docker Image Artifact Download'
-description: 'Downloads docker image artifact uploaded from another job in same workflow'
+name: "Docker Image Artifact Download"
+description: "Downloads docker image artifact uploaded from another job in same workflow"
 inputs:
-  image: 
+  image:
     description: Docker image to download
     required: true
 outputs:
-  download_path: 
+  download_path:
     description: Download path of the content of the artifact
 runs:
-  using: 'node12'
-  main: 'dist/index.js'
+  using: "node16"
+  main: "dist/main.js"
