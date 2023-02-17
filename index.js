@@ -27,8 +27,11 @@ async function runAction(getInput, writeOutput) {
         throw new Error(`Input variable: token should be provided for downloading image from another workflow`);
     }
 
-    const repository = getInput(INPUT_REPOSITORY) || githubActionContext.getRepositoryName();
-    const [owner, repo] = repository.split("/");
+    const inputRepository = getInput(INPUT_REPOSITORY).trim();
+    var { owner, repo } = githubActionContext.getRepository();
+    if (inputRepository != "") {
+        [owner, repo] = inputRepository.split("/");
+    }
 
     const downloadPath = await downloadFromWorkflow(token)(owner, repo, workflow, imageName);
     writeOutput(OUTPUT_DOWNLOAD_PATH, downloadPath);
