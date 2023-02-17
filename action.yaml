@@ -4,6 +4,18 @@ inputs:
   image:
     description: Docker image to download
     required: true
+  repository:
+    description: Repository name in form of `owner/repo`.
+    required: false
+    default: ""
+  workflow:
+    description: Name of the workflow to download image from.
+    required: false
+    default: ""
+  token:
+    description: Github token with read permission to artifacts in given repo.
+    required: false
+    default: ""
 outputs:
   download_path:
     description: Download path of the content of the artifact

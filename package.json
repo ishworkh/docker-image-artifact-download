@@ -29,7 +29,8 @@
   },
   "dependencies": {
     "@actions/core": "^1.9",
-    "docker-image-artifact": "github:ishworkh/docker-image-artifact#semver:^1.2"
+    "@actions/github": "^5.1",
+    "docker-image-artifact": "github:ishworkh/docker-image-artifact#download_from_another_workflow"
   },
   "devDependencies": {
     "webpack": "^5.74",
