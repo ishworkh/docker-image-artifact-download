@@ -2,7 +2,7 @@
 const { download, downloadFromWorkflow } = require('docker-image-artifact');
 
 const githubActionIO = require('./actions_io');
-const githubActionContext = require('./action_context');
+const githubActionContext = require('./actions_context');
 
 const INPUT_IMAGE = 'image';
 const INPUT_REPOSITORY = 'repository';
