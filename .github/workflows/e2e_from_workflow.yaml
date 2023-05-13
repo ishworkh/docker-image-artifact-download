@@ -1,0 +1,21 @@
+name: E2E Download Image From Another Workflow
+on:
+  repository_dispatch:
+    types: [run-e2e-from-workflow]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Download image
+        uses: ./
+        with:
+          image: "${{ github.event.client_payload.image }}"
+          workflow: "${{ github.event.client_payload.workflow }}"
+          token: "${{ secrets.ARTIFACT_DOWNLOADER_TOKEN }}"
+
+      - name: Test docker image is present
+        run: |
+          docker image inspect ${{ github.event.client_payload.image }}

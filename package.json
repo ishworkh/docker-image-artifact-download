@@ -1,9 +1,9 @@
 {
   "name": "docker-image-artifact-download",
-  "version": "1.2.0",
+  "version": "2.0.0",
   "description": "Github action to download docker image from artifact that was uploaded from another job",
   "scripts": {
-    "build": "./node_modules/.bin/webpack --entry ./index.js --target node --output-path dist/"
+    "build": "./node_modules/.bin/webpack --mode production --entry ./src/main.js --target node --output-path dist/"
   },
   "repository": {
     "type": "git",
@@ -29,7 +29,10 @@
   },
   "dependencies": {
     "@actions/core": "^1.9",
-    "docker-image-artifact": "github:ishworkh/docker-image-artifact#semver:^1.2"
+    "@actions/github": "^5.1",
+    "docker-image-artifact": "github:ishworkh/docker-image-artifact#semver:^2.0",
+    "ncc": "^0.2.0",
+    "original-fs": "^1.2"
   },
   "devDependencies": {
     "webpack": "^5.74",

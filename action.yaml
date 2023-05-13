@@ -4,6 +4,39 @@ inputs:
   image:
     description: Docker image to download
     required: true
+  repository:
+    description: Repository name in form of `owner/repo`.
+    required: false
+    default: ""
+  workflow:
+    description: Name of the workflow to download image from.
+    required: false
+    default: ""
+  token:
+    description: Github token with read permission to artifacts in given repo.
+    required: false
+    default: ""
+
+  workflow_conclusion:
+    description: Conclusion for an workflow run.
+    required: false
+    default: ""
+  commit_sha:
+    description: SHA for the commit.
+    required: false
+    default: ""
+  branch:
+    description: Branch name.
+    required: false
+    default: ""
+  workflow_event:
+    description: Name of event that triggered the workflow run.
+    required: false
+    default: ""
+  workflow_run_id:
+    description: Exact run id for the workflow.
+    required: false
+    default: ""
 outputs:
   download_path:
     description: Download path of the content of the artifact
