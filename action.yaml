@@ -16,6 +16,27 @@ inputs:
     description: Github token with read permission to artifacts in given repo.
     required: false
     default: ""
+
+  workflow_conclusion:
+    description: Conclusion for an workflow run.
+    required: false
+    default: "success"
+  commit_sha:
+    description: SHA for the commit.
+    required: false
+    default: ""
+  branch:
+    description: Branch name.
+    required: false
+    default: ""
+  workflow_event:
+    description: Name of event that triggered the workflow run.
+    required: false
+    default: ""
+  workflow_run_id:
+    description: Exact run id for the workflow.
+    required: false
+    default: ""
 outputs:
   download_path:
     description: Download path of the content of the artifact
