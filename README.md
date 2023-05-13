@@ -2,7 +2,7 @@
 
 Github action for downloading a docker image artifact. It downloads image artifact uploaded by [docker-image-artifact-upload](https://github.com/ishworkh/docker-image-artifact-upload) and loads into local docker daemon for use in a job.
 
-TO BE UPDATED
+TO BE UPDATED RANDOM
 
 ## Inputs
 

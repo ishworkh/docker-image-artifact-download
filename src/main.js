@@ -3,6 +3,7 @@ const { download, createArtifactDownloader, createOctokitArtifactDownloader } = 
 
 const { getInput, writeOutput, debug, fail } = require('./actions_io');
 const { getRepositoryName, getWorkflowName } = require('./actions_context');
+const { createFilterBuilder } = require('./workflow_run_filter');
 
 const INPUT_IMAGE = 'image';
 
@@ -19,37 +20,38 @@ const INPUT_WORKFLOW_RUN_ID = "workflow_run_id";
 
 const OUTPUT_DOWNLOAD_PATH = 'download_path';
 
-const createFilter = (commitSHA, branch, workflowRunId, workflowEvent, workflowConclusion) => {
+const createWorkflowRunFilter = () => {
+    const filterBuilder = createFilterBuilder();
+
+    const workflowRunId = getInput(INPUT_WORKFLOW_RUN_ID);
     if (workflowRunId != "") {
         debug(`Exact run ID ${workflowRunId} wast set. Taking precedence over other filters.`);
-        return (workflowRun) => {
-            return workflowRun.id == parseInt(workflowRunId);
-        }
+        return filterBuilder
+            .setWorkflowRunId(workflowRunId)
+            .build();
     }
-    const setCommitSHA = commitSHA != "";
-    const setBranch = branch != "";
-    const setEvent = workflowEvent != "";
 
-    const conclusion = workflowConclusion || "success";
-    return (workflowRun) => {
-        debug(`Workflow conclusion filter set to "${conclusion}"`);
-        let retVal = conclusion == workflowRun.conclusion;
-
-        if (setCommitSHA) {
-            debug(`Commit SHA filter set - ${commitSHA} .`);
-            retVal = retVal && commitSHA == workflowRun.head_sha;
-        }
-        if (setBranch) {
-            debug(`Branch filter set - ${branch} .`);
-            retVal = retVal && branch == workflowRun.branch;
-        }
-        if (setEvent) {
-            debug(`Workflow event filter set - ${workflowEvent} .`);
-            retVal = retVal && workflowEvent == workflow.event;
-        }
-
-        return retVal;
+    const commitSHA = getInput(INPUT_COMMIT_SHA);
+    if (commitSHA != "") {
+        filterBuilder.setCommitSHA(commitSHA);
     }
+
+    const branch = getInput(INPUT_BRANCH);
+    if (branch != "") {
+        filterBuilder.setBranch(branch);
+    }
+
+    const workflowEvent = getInput(INPUT_WORKFLOW_EVENT);
+    if (workflowEvent != "") {
+        filterBuilder.setWorkflowEvent(workflowEvent);
+    }
+
+    const conclusion = getInput(INPUT_WORKFLOW_CONCLUSION);
+    if (conclusion != "") {
+        filterBuilder.setWorkflowConclusion(conclusion);
+    }
+
+    return filterBuilder.build();
 }
 
 async function runAction() {
@@ -83,13 +85,7 @@ async function runAction() {
         imageName,
         createOctokitArtifactDownloader(
             token, owner, repo, workflow,
-            createFilter(
-                getInput(INPUT_COMMIT_SHA),
-                getInput(INPUT_BRANCH),
-                getInput(INPUT_WORKFLOW_RUN_ID),
-                getInput(INPUT_WORKFLOW_EVENT),
-                getInput(INPUT_WORKFLOW_CONCLUSION)
-            )
+            createWorkflowRunFilter()
         )
     );
     writeOutput(OUTPUT_DOWNLOAD_PATH, downloadPath);
