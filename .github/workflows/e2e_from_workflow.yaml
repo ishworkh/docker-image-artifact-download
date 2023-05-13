@@ -14,7 +14,7 @@ jobs:
         with:
           image: "${{ github.event.client_payload.image }}"
           workflow: "${{ github.event.client_payload.workflow }}"
-          token: "${{ secrets.GITHUB_TOKEN }}"
+          token: "${{ secrets.ARTIFACT_DOWNLOADER_TOKEN }}"
 
       - name: Test docker image is present
         run: |
