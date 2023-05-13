@@ -26,13 +26,14 @@ const createFilter = (commitSHA, branch, workflowRunId, workflowEvent, workflowC
             return workflowRun.id == parseInt(workflowRunId);
         }
     }
-    const setCommitSHA = commitSHA != ""
-    const setBranch = branch != ""
-    const setEvent = workflowEvent != ""
+    const setCommitSHA = commitSHA != "";
+    const setBranch = branch != "";
+    const setEvent = workflowEvent != "";
 
+    const conclusion = workflowConclusion || "success";
     return (workflowRun) => {
-        debug(`Workflow conclusion filter set to "${workflowConclusion}"`);
-        let retVal = workflowConclusion == workflowRun.conclusion;
+        debug(`Workflow conclusion filter set to "${conclusion}"`);
+        let retVal = conclusion == workflowRun.conclusion;
 
         if (setCommitSHA) {
             debug(`Commit SHA filter set - ${commitSHA} .`);
@@ -53,11 +54,12 @@ const createFilter = (commitSHA, branch, workflowRunId, workflowEvent, workflowC
 
 async function runAction() {
     const imageName = getInput(INPUT_IMAGE, true);
+    debug(`Starting to download image ${imageName}`);
 
     const repository = getInput(INPUT_REPOSITORY) || getRepositoryName();
     const workflow = getInput(INPUT_WORKFLOW) || getWorkflowName();
 
-    if (getRepositoryName() == repository && getWorkflowName() == repository) {
+    if (getRepositoryName() == repository && getWorkflowName() == workflow) {
         debug(`Downloading image artifact from the same workflow. `)
         const downloadPath = await download(imageName, createArtifactDownloader());
 
@@ -65,6 +67,7 @@ async function runAction() {
         return;
     }
 
+    debug(`Downloading image artifact from a different workflow ${workflow} in ${repository}. `);
     const token = getInput(INPUT_TOKEN);
     if (token == "") {
         throw new Error(`Input variable: token should be provided for downloading image from another workflow`);
@@ -75,7 +78,7 @@ async function runAction() {
         throw new Error(`Invalid repository name. Should be in format of owner/repo`);
     }
 
-    debug(`Donwloading image from the repo - ${repository}, workflow - ${workflow}. `)
+    debug(`Downloading image from the repo - ${repository}, workflow - ${workflow}. `)
     const downloadPath = await download(
         imageName,
         createOctokitArtifactDownloader(

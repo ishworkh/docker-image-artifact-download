@@ -20,7 +20,7 @@ inputs:
   workflow_conclusion:
     description: Conclusion for an workflow run.
     required: false
-    default: "success"
+    default: ""
   commit_sha:
     description: SHA for the commit.
     required: false

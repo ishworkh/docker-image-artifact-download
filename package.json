@@ -30,7 +30,7 @@
   "dependencies": {
     "@actions/core": "^1.9",
     "@actions/github": "^5.1",
-    "docker-image-artifact": "github:ishworkh/docker-image-artifact#download_from_another_workflow",
+    "docker-image-artifact": "github:ishworkh/docker-image-artifact#semver:^2.0",
     "ncc": "^0.2.0",
     "original-fs": "^1.2"
   },
