@@ -2,7 +2,7 @@
 
 Github action for downloading a docker image artifact. It downloads image artifact uploaded by [docker-image-artifact-upload](https://github.com/ishworkh/docker-image-artifact-upload) and loads into local docker daemon for use in a job.
 
-TO BE UPDATED RANDOM
+It supports download image artifact from same a different in job in the same workflow or from a different workflow in the same repository or a different one.
 
 ## Inputs
 
@@ -10,6 +10,37 @@ TO BE UPDATED RANDOM
 
 **Required** Image name that is to be downloaded.
 
+### `repository`
+
+**Optional** Repository in form of owner/name to download image from.
+
+### `workflow`
+
+**Optional** Workflow name to download image from.
+
+### `token`
+
+**Optional** Token with enough permissions to download artifact(s) from repo and workflow. It is required if `workflow` is set to different workflow than the currently running.
+
+### `workflow_run_id`
+
+**Optional** Filter workflow runs based workflow event. This takes the precedence over all filters if it is set.
+
+### `workflow_conclusion`
+
+**Optional** Filter workflow runs based on workflow conclusion. Possible values are `success`, `failure`, `cancelled`, or `skipped`.
+
+### `commit_sha`
+
+**Optional** Filter workflow runs based on commit SHA.
+
+### `branch`
+
+**Optional** Filter workflow runs based on branch.
+
+### `workflow_event`
+
+**Optional** Filter workflow runs based workflow event.
 
 ## Outputs
 
@@ -18,6 +49,8 @@ TO BE UPDATED RANDOM
 Path in node where docker image archive is downloaded. Eg. `/tmp/foo_latest` for image `foo:latest`.
 
 ## Example usage
+
+### From a different job in the same workflow
 
 ```
 ...
@@ -32,6 +65,88 @@ jobs:
         image: "test_image:latest"
 
 ```
+
+### From a different workflow in the same repository
+
+```
+...
+jobs:
+  download_image:
+    - name: Checkout project
+      uses: actions/checkout@v2
+
+    - name: Download image
+      uses: ishworkh/docker-image-artifact-download@v1
+      with:
+        image: "test_image:latest"
+        workflow: "Some Another Workflow"
+        token: "secrettoken"
+```
+
+### From a different workflow with run id
+
+```
+...
+jobs:
+  download_image:
+    - name: Checkout project
+      uses: actions/checkout@v2
+
+    - name: Download image
+      uses: ishworkh/docker-image-artifact-download@v1
+      with:
+        image: "test_image:latest"
+        workflow: "Some Another Workflow"
+        token: "secrettoken"
+        workflow_run_id: "234343434234234"
+```
+
+### From a different workflow with other filters
+
+```
+...
+jobs:
+  download_image:
+    - name: Checkout project
+      uses: actions/checkout@v2
+
+    - name: Download image
+      uses: ishworkh/docker-image-artifact-download@v1
+      with:
+        image: "test_image:latest"
+        workflow: "Some Another Workflow"
+        token: "secrettoken"
+        workflow_event: "dispatch_workflow"
+        branch: "main"
+        commit_sha: "8471d40bfc4d0abc8409ba9391bb592bd0f1deb4"
+        workflow_conclusion: "success"
+```
+
+### From a different workflow in a different repository
+
+```
+...
+jobs:
+  download_image:
+    - name: Checkout project
+      uses: actions/checkout@v2
+
+    - name: Download image
+      uses: ishworkh/docker-image-artifact-download@v1
+      with:
+        image: "test_image:latest"
+        repository: "owner/my-repo"
+        workflow: "Some Another Workflow"
+        token: "secrettoken"
+```
+
+## Changelogs
+
+### `v2.0.0`
+
+- Add possibility to download image from another workflow/repository.
+- Move codes to `src/` directory.
+- Introduce semver versioning for github action releases. No single major version like `v1` will be released from now on.
 
 ## License
 This library is under the MIT license.
