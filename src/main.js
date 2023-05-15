@@ -33,21 +33,25 @@ const createWorkflowRunFilter = () => {
 
     const commitSHA = getInput(INPUT_COMMIT_SHA);
     if (commitSHA != "") {
+        debug(`Commit SHA filter set - ${commitSHA} .`);
         filterBuilder.setCommitSHA(commitSHA);
     }
 
     const branch = getInput(INPUT_BRANCH);
     if (branch != "") {
+        debug(`Branch filter set - ${branch} .`);
         filterBuilder.setBranch(branch);
     }
 
     const workflowEvent = getInput(INPUT_WORKFLOW_EVENT);
     if (workflowEvent != "") {
+        debug(`Workflow event filter set - ${workflowEvent} .`);
         filterBuilder.setWorkflowEvent(workflowEvent);
     }
 
     const conclusion = getInput(INPUT_WORKFLOW_CONCLUSION);
     if (conclusion != "") {
+        debug(`Workflow conclusion filter set to - ${conclusion}`);
         filterBuilder.setWorkflowConclusion(conclusion);
     }
 

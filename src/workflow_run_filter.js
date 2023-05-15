@@ -1,7 +1,7 @@
 class WorkflowRunFilterBuilder {
   constructor() {
     this.workflowRunId = null;
-    this.workflowConclusion = "success";
+    this.workflowConclusion = null;
     this.commitSHA = null;
     this.branch = null;
     this.workflowEvent = null;
@@ -34,27 +34,26 @@ class WorkflowRunFilterBuilder {
 
   build() {
     if (this.workflowRunId != null) {
-      debug(`Exact run ID ${workflowRunId} wast set. Taking precedence over other filters.`);
       return (workflowRun) => {
         return this.workflowRunId == workflowRun.id;
       }
     }
 
     return (workflowRun) => {
-      debug(`Workflow conclusion filter set to "${conclusion}"`);
-      let retVal = this.conclusion == workflowRun.conclusion;
+      let retVal = true;
+
+      if (this.conclusion != null) {
+        retVal = retVal && this.conclusion == workflowRun.conclusion;
+      }
 
       if (this.commitSHA != null) {
-        debug(`Commit SHA filter set - ${commitSHA} .`);
         retVal = retVal && this.commitSHA == workflowRun.head_sha;
       }
       if (this.branch != null) {
-        debug(`Branch filter set - ${branch} .`);
-        retVal = retVal && this.branch == workflowRun.branch;
+        retVal = retVal && this.branch == workflowRun.head_branch;
       }
       if (this.event) {
-        debug(`Workflow event filter set - ${workflowEvent} .`);
-        retVal = retVal && this.workflowEvent == workflow.event;
+        retVal = retVal && this.workflowEvent == workflowRun.event;
       }
 
       return retVal;
