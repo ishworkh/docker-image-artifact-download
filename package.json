@@ -1,6 +1,6 @@
 {
   "name": "docker-image-artifact-download",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Github action to download docker image from artifact that was uploaded from another job",
   "scripts": {
     "build": "./node_modules/.bin/webpack --mode production --entry ./src/main.js --target node --output-path dist/"

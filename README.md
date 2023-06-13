@@ -2,7 +2,13 @@
 
 Github action for downloading a docker image artifact. It downloads image artifact uploaded by [docker-image-artifact-upload](https://github.com/ishworkh/docker-image-artifact-upload) and loads into local docker daemon for use in a job.
 
-It supports download image artifact from same a different in job in the same workflow or from a different workflow in the same repository or a different one.
+It supports downloading image artifacts from
+- same job
+- different job in the same workflow
+- different job in a different workflow in the same repository
+- different job in a different workflow in a different repository
+
+# Please update you workflows to use proper semver versions introduced since v2.0.0.
 
 ## Inputs
 
@@ -60,7 +66,7 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Download image
-      uses: ishworkh/docker-image-artifact-download@v1
+      uses: ishworkh/docker-image-artifact-download@v2.0.1
       with:
         image: "test_image:latest"
 
@@ -76,7 +82,7 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Download image
-      uses: ishworkh/docker-image-artifact-download@v1
+      uses: ishworkh/docker-image-artifact-download@v2.0.1
       with:
         image: "test_image:latest"
         workflow: "Some Another Workflow"
@@ -93,7 +99,7 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Download image
-      uses: ishworkh/docker-image-artifact-download@v1
+      uses: ishworkh/docker-image-artifact-download@v2.0.1
       with:
         image: "test_image:latest"
         workflow: "Some Another Workflow"
@@ -111,7 +117,7 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Download image
-      uses: ishworkh/docker-image-artifact-download@v1
+      uses: ishworkh/docker-image-artifact-download@v2.0.1
       with:
         image: "test_image:latest"
         workflow: "Some Another Workflow"
@@ -132,7 +138,7 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Download image
-      uses: ishworkh/docker-image-artifact-download@v1
+      uses: ishworkh/docker-image-artifact-download@v2.0.1
       with:
         image: "test_image:latest"
         repository: "owner/my-repo"
@@ -145,8 +151,11 @@ jobs:
 ### `v2.0.0`
 
 - Add possibility to download image from another workflow/repository.
-- Move codes to `src/` directory.
-- Introduce semver versioning for github action releases. No single major version like `v1` will be released from now on.
+- Introduce semver versioning for github action releases. No versions with just major segment i.e `v1` will be released from now on.
+
+### `v1`
+
+- Old release that supported downloading images from same workflow.
 
 ## License
 This library is under the MIT license.
