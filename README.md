@@ -1,4 +1,8 @@
-# Docker Image Artifact Download
+# Docker Image Artifact Download - DEPRECATED
+
+**DEPRECATED. This action will no longer be maintained and cease to get new features in future.**
+
+**Please migrate your workflows to use [_ishworkh/container-image-artifact-download@v1.0.0_](https://github.com/ishworkh/container-image-artifact-download) instead. It includes same features for docker and it adds support for podman on top of docker.**
 
 Github action for downloading a docker image artifact. It downloads image artifact uploaded by [docker-image-artifact-upload](https://github.com/ishworkh/docker-image-artifact-upload) and loads into local docker daemon for use in a job.
 
@@ -7,6 +11,19 @@ It supports downloading image artifacts from
 - different job in the same workflow
 - different job in a different workflow in the same repository
 - different job in a different workflow in a different repository
+
+## Migration to `container-image-artifact-download`
+
+- Update `docker-image-image-download` action in workflows to following,
+
+```yaml
+- name: Download an image
+  uses: ishworkh/container-image-artifact-download@v1.0.0
+  with:
+    image: "test_image:latest"
+```
+
+Variable `container_engine` added in `container-image-artifact-download` action defaults to `docker`.
 
 # Please update you workflows to use proper semver versions introduced since v2.0.0.
 
@@ -147,6 +164,14 @@ jobs:
 ```
 
 ## Changelogs
+
+### `v2.1.0`
+
+- Update README about deprecation.
+
+### `v2.0.1`
+
+- Fix README.
 
 ### `v2.0.0`
 
